@@ -3,6 +3,10 @@ Python 3 Android
 
 This is an experimental set of build scripts that will crosscompile Python 3 for an ARM Android device.
 
+BUGS
+------
+1. It is a known issue that the NDK 13 build currently does not work on Android version before Android 5.
+
 Usage
 ------
 
