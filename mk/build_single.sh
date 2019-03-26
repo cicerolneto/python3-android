@@ -4,8 +4,15 @@ source ./env
 [[ ! -d "${ANDROID_PREFIX}/${BUILD_IDENTIFIER}/include" ]] && (mkdir "${ANDROID_PREFIX}/${BUILD_IDENTIFIER}/include" || exit 1)
 
 
-#export PATH="${ANDROID_TOOL_PREFIX}/${BUILD_IDENTIFIER}/bin:${PATH}"
+export PATH="${ANDROID_TOOL_PREFIX}/${BUILD_IDENTIFIER}/bin:${PATH}"
 export PREFIX="${ANDROID_PREFIX}/${BUILD_IDENTIFIER}"
+
+
+
+
+
+
+
 export TOOL_PREFIX="${ANDROID_TOOL_PREFIX}/${BUILD_IDENTIFIER}"
 export HOST="${ANDROID_HOST}"
 export TARGET="${ANDROID_TARGET}"
@@ -70,10 +77,8 @@ export RANLIB="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-ranlib"
 export STRIP="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-strip"
 export READELF="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-readelf"
 
-export PATH="${TOOL_PREFIX}/${ANDROID_TARGET}/bin:${PATH}"
 
-
-
+#export PATH="${TOOL_PREFIX}/${ANDROID_TARGET}/bin:${PATH}"
 
 export NAME="$1"
 export VERSION="$2"

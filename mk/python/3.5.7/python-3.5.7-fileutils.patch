@@ -1,0 +1,74 @@
+--- ./Python/fileutils.c	2019-03-17 19:47:59.000000000 -0400
++++ Python/android-fileutils.c	2019-03-25 16:41:11.727219906 -0400
+@@ -20,7 +20,7 @@
+ #include <fcntl.h>
+ #endif /* HAVE_FCNTL_H */
+ 
+-#ifdef __APPLE__
++#if defined(__APPLE__) || defined(__ANDROID__)
+ extern wchar_t* _Py_DecodeUTF8_surrogateescape(const char *s, Py_ssize_t size);
+ #endif
+ 
+@@ -60,7 +60,7 @@
+        has no console */
+     if (cp != 0)
+         return PyUnicode_FromFormat("cp%u", (unsigned int)cp);
+-#elif defined(CODESET)
++#elif defined(HAVE_NL_LANGINFO) && defined(CODESET)
+     {
+         char *codeset = nl_langinfo(CODESET);
+         if (codeset != NULL && codeset[0] != 0)
+@@ -70,7 +70,7 @@
+     Py_RETURN_NONE;
+ }
+ 
+-#if !defined(__APPLE__) && !defined(MS_WINDOWS)
++#if !defined(__APPLE__) && !defined(__ANDROID__) && !defined(MS_WINDOWS)
+ extern int _Py_normalize_encoding(const char *, char *, size_t);
+ 
+ /* Workaround FreeBSD and OpenIndiana locale encoding issue with the C locale.
+@@ -102,7 +102,7 @@
+ check_force_ascii(void)
+ {
+     char *loc;
+-#if defined(HAVE_LANGINFO_H) && defined(CODESET)
++#if defined(HAVE_NL_LANGINFO) && defined(CODESET)
+     char *codeset, **alias;
+     char encoding[100];
+     int is_ascii;
+@@ -133,7 +133,7 @@
+         return 0;
+     }
+ 
+-#if defined(HAVE_LANGINFO_H) && defined(CODESET)
++#if defined(HAVE_NL_LANGINFO) && defined(CODESET)
+     codeset = nl_langinfo(CODESET);
+     if (!codeset || codeset[0] == '\0') {
+         /* CODESET is not set or empty */
+@@ -220,7 +220,7 @@
+ }
+ #endif   /* !defined(__APPLE__) && !defined(MS_WINDOWS) */
+ 
+-#if !defined(__APPLE__) && (!defined(MS_WINDOWS) || !defined(HAVE_MBRTOWC))
++#if !defined(__APPLE__) && !defined(__ANDROID__) && (!defined(MS_WINDOWS) || !defined(HAVE_MBRTOWC))
+ static wchar_t*
+ decode_ascii_surrogateescape(const char *arg, size_t *size)
+ {
+@@ -272,7 +272,7 @@
+ wchar_t*
+ Py_DecodeLocale(const char* arg, size_t *size)
+ {
+-#ifdef __APPLE__
++#if defined(__APPLE__) || defined(__ANDROID__)
+     wchar_t *wstr;
+     wstr = _Py_DecodeUTF8_surrogateescape(arg, strlen(arg));
+     if (size != NULL) {
+@@ -423,7 +423,7 @@
+ char*
+ Py_EncodeLocale(const wchar_t *text, size_t *error_pos)
+ {
+-#ifdef __APPLE__
++#if defined(__APPLE__) || defined(__ANDROID__)
+     Py_ssize_t len;
+     PyObject *unicode, *bytes = NULL;
+     char *cpath;

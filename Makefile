@@ -16,7 +16,7 @@ $1-$2: ndk $3
 ifeq ($(SOURCES_LOCAL),1)
 	@wget -N -P "src/" -i "mk/$1/$2/sources-local.txt"
 else
-	@wget -N -P "src/" -i "mk/$1/$2/sources.txt"
+	@curl -Lo "src/$(shell cat mk/$1/$2/sources.txt | sed 's:.*/::')" "$(shell cat mk/$1/$2/sources.txt)"
 endif
 ifeq ("$$(wildcard build/.built-$(BUILD_IDENTIFIER)/$1-$2)","")
 	$$(info Building $1 $2...)
@@ -31,13 +31,13 @@ endef
 build: python_modules python
 
 # Main Python.
-$(eval $(call formula,python,3.5.1))
+$(eval $(call formula,python,3.5.7))
 
 # Optional Python modules.
 python_modules: $(foreach mod,$(subst ',,$(PYTHON_OPTIONAL_MODULES)),python_$(mod))
 
 # Python lzma support.
-$(eval $(call formula,xz,5.2.3))
+$(eval $(call formula,xz,5.2.4))
 python_lzma: xz
 
 # Python bzip2 support.

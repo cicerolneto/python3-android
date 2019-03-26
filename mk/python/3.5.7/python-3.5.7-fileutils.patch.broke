@@ -1,0 +1,11 @@
+--- Python3.5.7/Python/fileutils.c
++++ Python3.5.7-android/Python/fileutils.c
+@@ -133,7 +133,7 @@
+         return 0;
+     }
+ 
+- #if defined(HAVE_LANGINFO_H) && defined(CODESET)
++ #if defined(HAVE_LANGINFO) && defined(CODESET)
+     codeset = nl_langinfo(CODESET);
+     if (!codeset || codeset[0] == '\0') {
+         /* CODESET is not set or empty */
