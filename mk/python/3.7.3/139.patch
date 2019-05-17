@@ -1,0 +1,59 @@
+From aeda21db4961913ac30331a5f9ea16873d95cd12 Mon Sep 17 00:00:00 2001
+From: Yen Chi Hsuan <yan12125@gmail.com>
+Date: Fri, 17 Feb 2017 00:05:17 +0800
+Subject: [PATCH] bpo-29442: Replace optparse with argparse in setup.py
+
+---
+ .../2017-09-26-23-08-27.bpo-29442.fD8YTi.rst  |  1 +
+ setup.py                                      | 23 ++++---------------
+ 2 files changed, 5 insertions(+), 19 deletions(-)
+ create mode 100644 Misc/NEWS.d/next/Build/2017-09-26-23-08-27.bpo-29442.fD8YTi.rst
+
+diff --git a/Misc/NEWS.d/next/Build/2017-09-26-23-08-27.bpo-29442.fD8YTi.rst b/Misc/NEWS.d/next/Build/2017-09-26-23-08-27.bpo-29442.fD8YTi.rst
+new file mode 100644
+index 000000000000..9bd12689ec18
+--- /dev/null
++++ b/Misc/NEWS.d/next/Build/2017-09-26-23-08-27.bpo-29442.fD8YTi.rst
+@@ -0,0 +1 @@
++Replace optparse with argparse in setup.py
+diff --git a/setup.py b/setup.py
+index d5c58e068698..7a95957b844a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,7 +1,7 @@
+ # Autodetecting setup.py script for building the Python extensions
+ #
+ 
+-import sys, os, importlib.machinery, re, optparse
++import sys, os, importlib.machinery, re, argparse
+ from glob import glob
+ import importlib._bootstrap
+ import importlib.util
+@@ -565,24 +565,9 @@ def detect_modules(self):
+                 ('CPPFLAGS', '-I', self.compiler.include_dirs)):
+             env_val = sysconfig.get_config_var(env_var)
+             if env_val:
+-                # To prevent optparse from raising an exception about any
+-                # options in env_val that it doesn't know about we strip out
+-                # all double dashes and any dashes followed by a character
+-                # that is not for the option we are dealing with.
+-                #
+-                # Please note that order of the regex is important!  We must
+-                # strip out double-dashes first so that we don't end up with
+-                # substituting "--Long" to "-Long" and thus lead to "ong" being
+-                # used for a library directory.
+-                env_val = re.sub(r'(^|\s+)-(-|(?!%s))' % arg_name[1],
+-                                 ' ', env_val)
+-                parser = optparse.OptionParser()
+-                # Make sure that allowing args interspersed with options is
+-                # allowed
+-                parser.allow_interspersed_args = True
+-                parser.error = lambda msg: None
+-                parser.add_option(arg_name, dest="dirs", action="append")
+-                options = parser.parse_args(env_val.split())[0]
++                parser = argparse.ArgumentParser()
++                parser.add_argument(arg_name, dest="dirs", action="append")
++                options, _ = parser.parse_known_args(env_val.split())
+                 if options.dirs:
+                     for directory in reversed(options.dirs):
+                         add_dir_to_list(dir_list, directory)

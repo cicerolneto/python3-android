@@ -66,8 +66,8 @@ case "${ANDROID_PLATFORM}" in
       ;;
   arm64)
       export ANDROID_TARGET=aarch64-linux-android
-      export LLVM_TARGET=aarch64-none-linux-android 
-      export ANDROID_TOOLCHAIN="aarch64-linux-android-${ANDROID_COMPILER64}"
+      export LLVM_TARGET=aarch64-none-linux-androideabi${ANDROID_API_LEVEL}
+      export ANDROID_TOOLCHAIN="aarch64-linux-androideabi-${ANDROID_COMPILER64}"
       ;;
   mips)
       export ANDROID_TARGET=mipsel-linux-android

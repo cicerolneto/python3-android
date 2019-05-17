@@ -1,0 +1,11 @@
+--- Python-3.7.3/configure.ac	2018-12-23 23:37:36.000000000 +0200
++++ Python-3.7.3-android/configure.ac	2019-03-06 12:08:30.027166362 +0200
+@@ -932,7 +932,7 @@
+   AC_MSG_RESULT([$_arm_arch])
+   if test "$_arm_arch" = 7; then
+     BASECFLAGS="${BASECFLAGS} -mfloat-abi=softfp -mfpu=vfpv3-d16"
+-    LDFLAGS="${LDFLAGS} -march=armv7-a -Wl,--fix-cortex-a8"
++    LDFLAGS="${LDFLAGS} -march=armv7-a"
+   fi
+ else
+   AC_MSG_RESULT([not Android])
