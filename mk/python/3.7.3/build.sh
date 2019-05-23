@@ -7,11 +7,13 @@ pushd "Python-${VERSION}" >/dev/null
 
 # export CONFIG_BUILD=${ANDROID_HOST}
 
-# export CC="${CC} -no-integrated-as"
+export CC="${CC} -isystem ${PREFIX}/include -no-integrated-as"
+export LDFLAGS="${LDFLAGS} -L ${PREFIX}/lib"
+export CFLAGS="${CFLAGS} -Wno-unused-value -Wno-empty-body -Qunused-arguments"
 
 # Apply patches and build target Python.
 cat > config.site <<-SITE
-	ac_cv_file__dev_ptmx=yes
+	ac_cv_file__dev_ptmx=no
 	ac_cv_file__dev_ptc=no
     ac_cv_func_getloadavg=no    
 SITE

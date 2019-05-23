@@ -64,6 +64,14 @@ python_sqlite3: sqlite
 $(eval $(call formula,gdbm,1.11))
 python_gdbm: gdbm
 
+# Python expat support.
+$(eval $(call formula,expat,2.2.6))
+python_expat: expat
+
+# Python libffi support.
+$(eval $(call formula,libffi,3.3-rc0))
+python_libffi: libffi
+
 
 # Android NDK.
 ndk:
