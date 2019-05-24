@@ -3,7 +3,6 @@ source ./env
 [[ ! -d "${ANDROID_PREFIX}/${BUILD_IDENTIFIER}" ]] && (mkdir -p "${ANDROID_PREFIX}/${BUILD_IDENTIFIER}" || exit 1)
 [[ ! -d "${ANDROID_PREFIX}/${BUILD_IDENTIFIER}/include" ]] && (mkdir "${ANDROID_PREFIX}/${BUILD_IDENTIFIER}/include" || exit 1)
 
-
 #export PATH="${ANDROID_TOOL_PREFIX}/${BUILD_IDENTIFIER}/bin:${PATH}"
 export PREFIX="${ANDROID_PREFIX}/${BUILD_IDENTIFIER}"
 export TOOL_PREFIX="${ANDROID_TOOL_PREFIX}/${BUILD_IDENTIFIER}"
@@ -21,12 +20,9 @@ export LLVM_BASE_FLAGS="-target ${LLVM_TARGET}"
 export ARCH_SYSROOT="${NDK_ROOT}/platforms/android-${ANDROID_API_LEVEL}/arch-${ANDROID_PLATFORM}/usr"
 export UNIFIED_SYSROOT="${NDK_ROOT}/sysroot/usr"
 
-
 # SSH Needed?
 export CROSS_SYSROOT="${UNIFIED_SYSROOT}"
 export GCC_TOOLCHAIN="${TOOL_PREFIX}"
-
-
 
 export CC="${CLANG_PREFIX}/bin/clang"
 export CXX="${CLANG_PREFIX}/bin/clang++"
@@ -45,21 +41,8 @@ export CFLAGS="-fPIC"
 #       ;;
 # esac
 
-
 export CXXFLAGS="${CFLAGS}"
-##export LDFLAGS="${LLVM_BASE_FLAGS} --sysroot=${ARCH_SYSROOT} -pie"
 export LDFLAGS="${LLVM_BASE_FLAGS} -fuse-ld=lld"
-
-
-#?????
-# export CPPFLAGS="$CPPFLAGS -${CPPFLAGS_EXTRA}"
-# export LDFLAGS="$LDFLAGS ${"
-
-
-# self.env['CPPFLAGS'].extend(['-I', f'{dep_pkg.destdir()}/usr/include'])
-# self.env['LDFLAGS'].extend(['-L', f'{dep_pkg.destdir()}/usr/lib'])
-
-
 
 export AR="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-ar"
 export AS="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-as"
@@ -71,9 +54,6 @@ export STRIP="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-strip"
 export READELF="${TOOL_PREFIX}/bin/${ANDROID_TARGET}-readelf"
 
 export PATH="${TOOL_PREFIX}/${ANDROID_TARGET}/bin:${PATH}"
-
-
-
 
 export NAME="$1"
 export VERSION="$2"

@@ -9,7 +9,7 @@ pushd "Python-${VERSION}" >/dev/null
 
 export CC="${CC} -isystem ${PREFIX}/include -no-integrated-as"
 export LDFLAGS="${LDFLAGS} -L ${PREFIX}/lib"
-export CFLAGS="${CFLAGS} -Wno-unused-value -Wno-empty-body -Qunused-arguments"
+# export CFLAGS="${CFLAGS} -Wno-unused-value -Wno-empty-body -Qunused-arguments"
 
 # Apply patches and build target Python.
 cat > config.site <<-SITE
