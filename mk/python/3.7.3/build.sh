@@ -7,9 +7,15 @@ pushd "Python-${VERSION}" >/dev/null
 
 # export CONFIG_BUILD=${ANDROID_HOST}
 
-export CC="${CC} -isystem ${PREFIX}/include -no-integrated-as"
+export CC="${CC} -isystem ${PREFIX}/include  -no-integrated-as"
 export LDFLAGS="${LDFLAGS} -L ${PREFIX}/lib"
 # export CFLAGS="${CFLAGS} -Wno-unused-value -Wno-empty-body -Qunused-arguments"
+
+
+export OPENSSL_INCLUDES="${PREFIX}/include/openssl"
+export OPENSSL_LDFLAGS="${LDFLAGS}"
+export OPENSSL_LIBS="${PREFIX}/lib"
+
 
 # Apply patches and build target Python.
 cat > config.site <<-SITE
@@ -25,7 +31,7 @@ patch -p1  < "${FILESDIR}/139.patch" || exit 1
 
 autoreconf --install --verbose --force
 
-./configure CROSS_COMPILE_TARGET=yes CONFIG_SITE=config.site --prefix="${PREFIX}" --host="${TARGET}" --build="${HOST}" --disable-ipv6 --enable-shared --without-ensurepip --with-system-ffi --with-system-expat || exit 1 
+./configure CROSS_COMPILE_TARGET=yes CONFIG_SITE=config.site --prefix="${PREFIX}" --host="${TARGET}" --build="${HOST}" --disable-ipv6 --enable-shared --without-ensurepip --with-system-ffi --with-system-expat --with-ssl-default-suites || exit 1 
 
 make CROSS_COMPILE_TARGET=yes HOSTPYTHON="$(pwd)/hostpython" HOSTPGEN="$(pwd)/Parser/hostpgen" || exit 1
 make CROSS_COMPILE_TARGET=yes HOSTPYTHON="$(pwd)/hostpython" HOSTPGEN="$(pwd)/Parser/hostpgen" install || exit 1

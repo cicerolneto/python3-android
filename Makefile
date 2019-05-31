@@ -49,7 +49,7 @@ $(eval $(call formula,readline,6.3))
 python_readline: readline
 
 # Python SSL support.
-$(eval $(call formula,openssl,1.1.0f))
+$(eval $(call formula,openssl,1.1.1b))
 python_ssl: openssl
 
 # Python curses support.
