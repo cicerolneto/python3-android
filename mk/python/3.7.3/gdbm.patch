@@ -1,6 +1,6 @@
 --- a/setup.py
 +++ b/setup.py
-@@ -1260,17 +1264,17 @@ class PyBuildExt(build_ext):
+@@ -1245,17 +1249,17 @@ class PyBuildExt(build_ext):
                      if find_file("ndbm.h", inc_dirs, []) is not None:
                          # Some systems have -lndbm, others have -lgdbm_compat,
                          # others don't have either
