@@ -41,7 +41,7 @@ $(eval $(call formula,xz,5.2.3))
 python_lzma: xz
 
 # Python bzip2 support.
-$(eval $(call formula,bzip2,1.0.6))
+$(eval $(call formula,bzip2,1.0.8))
 python_bz2: bzip2
 
 # Python readline support.
