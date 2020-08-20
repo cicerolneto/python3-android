@@ -50,8 +50,8 @@ public class PythonThread extends Thread
         if ( Common.is64bitProcessor())
         {
             // Extract our 64bit zip
-            unzipFileFromAssets("Python64.zip");
-            lTempPath += "Python64";
+            unzipFileFromAssets("Python32.zip");
+            lTempPath += "Python32";
         }
         else
         {
@@ -104,7 +104,11 @@ public class PythonThread extends Thread
                 try
                 {
                     // Run our main
-                    runPython(lPathToMain.getAbsolutePath());
+                    int result = runPython(lPathToMain.getAbsolutePath());
+
+                    if(result != 0) {
+                        throw new Exception("Python returned " + result + ".");
+                    }
                     // We are done running, we will init again, cleanup
                     cleanupPython();
                 }
