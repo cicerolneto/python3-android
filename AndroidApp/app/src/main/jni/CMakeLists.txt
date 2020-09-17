@@ -20,9 +20,9 @@ include_directories(${jni_src_dir}/py_helpers
 )
 
 # define the 3rd party libraries to include in this project
-#add_library(python39 SHARED IMPORTED)
-#set_target_properties(python39 PROPERTIES IMPORTED_LOCATION ${distribution_dir}/${ANDROID_ABI}/libpython3.9.so)
-link_directories(${distribution_dir}/${ANDROID_ABI})
+add_library(python39 STATIC IMPORTED)
+set_target_properties(python39 PROPERTIES IMPORTED_LOCATION ${distribution_dir}/${ANDROID_ABI}/libpython3.9.a)
+#link_directories(${distribution_dir}/${ANDROID_ABI})
 
 # set various C and CXX(++) flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNDEBUG")
@@ -41,6 +41,6 @@ SET_TARGET_PROPERTIES (pythonthread PROPERTIES LINKER_LANGUAGE CXX)
 
 # lastly, set to link against the 3rd party libs above
 target_link_libraries(pythonthread
-                      python3.9
+                      python39
                       log
                       atomic)
